@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+
 import java.util.stream.Collectors;
 
 @Controller
@@ -32,10 +33,12 @@ public class TorneoController {
     }
 
     @PostMapping("/addTorneo")
-    public String addTorneo(@ModelAttribute Torneo torneo){
+    public String addTorneo(@ModelAttribute Torneo torneo) {
         torneoService.saveTorneo(torneo);
-            return "redirect:/";
-            }
+
+        return "redirect:/";
+    }
+
 
     @GetMapping("/")
     public String home(Model model, Authentication authentication){

@@ -1,0 +1,138 @@
+.tournament-card {
+    background: linear-gradient(135deg, #1c1c2e, #2a1e3a); /* Fondo oscuro degradado */
+    border: 2px solid transparent; /* Borde inicial transparente */
+    border-radius: 10px; /* Bordes redondeados (reducción de 15px a 10px para un look más compacto) */
+    padding: 15px; /* Menos espaciado interno */
+    margin-bottom: 20px; /* Margen inferior reducido */
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+
+
+/* Efecto de borde neón */
+.tournament-card::after {
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: 10px; /* Igual que la tarjeta */
+    background: linear-gradient(45deg, #00ff88, #7a6ff0, #00ff88);
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.tournament-card:hover::after {
+    opacity: 1;
+}
+
+/* Pseudo-elemento para efecto de halo/neon */
+.tournament-card::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(0,255,136,0.3) 0%, transparent 70%);
+    transform: rotate(45deg);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.tournament-card:hover::before {
+    opacity: 1;
+}
+
+.tournament-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 255, 136, 0.3);
+    border-color: #00ff88;
+}
+
+.tournament-card h3 {
+    color: #00ff88; /* Verde neón */
+    font-size: 1.5rem; /* Tamaño de fuente reducido */
+    margin-bottom: 10px; /* Menor margen */
+    font-weight: 600;
+    /* Reducir el efecto de sombra para que el texto se destaque sin perder legibilidad */
+    text-shadow: 0 0 3px rgba(0, 255, 136, 0.7);
+}
+
+.tournament-card p {
+    color: #b0b0b0; /* Texto gris claro */
+    margin-bottom: 5px;
+    font-size: 0.95rem; /* Tamaño de fuente ligeramente reducido */
+}
+
+.tournament-card .game-icon {
+    width: 50px; /* Ícono ligeramente más pequeño */
+    height: 50px;
+    background-color: #00ff88;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    box-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tournament-card .game-icon:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.8);
+}
+
+.tournament-card .game-icon i {
+    color: #1c1c2e;
+    font-size: 1.5rem;
+}
+
+.tournament-card .btn-group {
+    margin-top: 15px;
+}
+
+.tournament-card .btn-group .btn {
+    margin-right: 10px;
+    background-color: #4a3a6b;
+    border: none;
+    color: #00ff88;
+    padding: 8px 16px; /* Espaciado interno reducido */
+    border-radius: 6px; /* Bordes ligeramente redondeados */
+    font-size: 0.9rem; /* Fuente un poco más pequeña */
+    font-weight: 500;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+
+.tournament-card .btn-group .btn:hover {
+    background-color: #00ff88;
+    color: #1c1c2e;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 255, 136, 0.3);
+}
+
+.tournament-card .btn-group .btn i {
+    margin-right: 5px;
+    color: inherit;
+}
+
+/* Asegurar que el contenido (texto y botones) se muestre por encima de los efectos */
+.tournament-card h3,
+.tournament-card p,
+.tournament-card .btn-group .btn {
+    position: relative;
+    z-index: 1;
+}
+
+.detail-text {
+    color: #ffffff !important;
+    font-size: 0.95rem !important;
+    margin-bottom: 5px !important;
+    text-shadow: none !important;
+    z-index: 1 !important;
+    position: relative !important;
+}

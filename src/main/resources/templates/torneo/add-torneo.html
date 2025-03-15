@@ -74,7 +74,12 @@
 <div class="container mt-5 gaming-content">
     <div class="row justify-content-center">
         <div class="col-lg-8">
-            <form th:action="@{${torneo.id == null} ? '/addTorneo' : '/torneo/edit/' +${torneo.id}}" th:object="${torneo}" method="post" class="gaming-form">
+            <!-- Mensaje de éxito -->
+            <div class="alert alert-success" role="alert" th:if="${successMessage}">
+                <i class="fa fa-check-circle"></i> <span th:text="${successMessage}"></span>
+            </div>
+
+            <form th:action="@{${torneo.id == null} ? '/addTorneo' : '/torneo/edit/' +${torneo.id}}" th:object="${torneo}" method="post" class="gaming-form" id="torneoForm">
                 <!-- Nombre del Torneo -->
                 <div class="mb-4">
                     <label for="name" class="form-label text-neon">Nombre del Torneo</label>
@@ -106,9 +111,12 @@
 
                 <!-- Botón de Guardar -->
                 <div class="text-center">
-                    <button type="submit" class="btn btn-primary gaming-btn">
+                    <button type="submit" class="btn btn-primary gaming-btn" onclick="confirmarGuardar(event)">
                         <i class="fa fa-save"></i> Guardar Torneo
                     </button>
+                    <a th:href="@{/}" class="btn btn-secondary gaming-btn">
+                        <i class="fa fa-times"></i> Cancelar
+                    </a>
                 </div>
             </form>
         </div>
@@ -139,5 +147,21 @@
 <script th:src="@{/assets/js/counter.js}"></script>
 <script th:src="@{/assets/js/custom.js}"></script>
 <script th:src="@{'https://unpkg.com/swiper@7/swiper-bundle.min.js'}"></script>
+
+<!-- Script para confirmación de guardado -->
+<script>
+    function confirmarGuardar(event) {
+        // Evitar que el formulario se envíe automáticamente
+        event.preventDefault();
+
+        // Mostrar cuadro de confirmación
+        const confirmacion = confirm("¿Estás seguro de que deseas guardar este torneo?");
+
+        // Si el usuario confirma, enviar el formulario
+        if (confirmacion) {
+            document.getElementById("torneoForm").submit();
+        }
+    }
+</script>
 </body>
 </html>

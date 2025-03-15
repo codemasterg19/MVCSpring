@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <title>Gaming</title>
+    <title>Lista de Torneos - GamerLeague</title>
 
     <!-- Bootstrap core CSS -->
     <link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
@@ -15,9 +17,12 @@
     <link th:href="@{/assets/css/owl.css}" rel="stylesheet">
     <link th:href="@{/assets/css/animate.css}" rel="stylesheet">
     <link th:href="@{'https://unpkg.com/swiper@7/swiper-bundle.min.css'}" rel="stylesheet">
-</head>
+    <link th:href="@{/assets/css/styleHome.css}" rel="stylesheet">
 
+
+</head>
 <body>
+
 <!-- Preloader -->
 <div id="js-preloader" class="js-preloader">
     <div class="preloader-inner">
@@ -56,73 +61,58 @@
 </header>
 <!-- Header Area End -->
 
-<!-- Main Banner (opcional, puedes conservarlo o removerlo según tus necesidades) -->
+<!-- Main Banner -->
 <div class="main-banner">
     <div class="container">
         <div class="row">
-            <!-- Puedes incluir aquí un banner o slider si lo deseas -->
             <div class="col-lg-12 text-center">
-                <h2>Bienvenido a GamerLeague</h2>
-                <p>Encuentra los mejores torneos y eventos gaming.</p>
+                <h2>Lista de Torneos</h2>
+                <p>Explora los torneos disponibles y únete a la competencia.</p>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Área principal de contenido -->
+<!-- Lista de Torneos -->
 <div class="container mt-5 gaming-content">
-    <div class="text-center mb-4">
-        <h1 class="display-4 text-neon">TORNEOS</h1>
-        <p class="lead text-muted">Explora los torneos más épicos y compite al máximo nivel</p>
-    </div>
+    <div class="row">
+        <!-- Botón para agregar torneo (solo si no es ROLE_USER) -->
+        <div class="mb-3 text-center" th:if="${role != 'ROLE_USER'}">
+            <a th:href="@{/addTorneo}" class="btn btn-outline-info gaming-btn">
+                <i class="fa fa-plus"></i> Agregar Torneo
+            </a>
+        </div>
 
-    <!-- Botón para agregar torneo (solo si no es ROLE_USER) -->
-    <div class="mb-3 text-center" th:if="${role != 'ROLE_USER'}">
-        <a th:href="@{/addTorneo}" class="btn btn-outline-info gaming-btn">
-            <i class="fa fa-plus"></i> Agregar Torneo
-        </a>
-    </div>
+        <!-- Tarjetas de Torneos -->
+        <div class="col-lg-4 col-md-6" th:each="torneo: ${torneos}">
+            <div class="tournament-card">
+                <!-- Icono del Juego -->
+                <div class="game-icon">
+                    <i class="fa fa-gamepad"></i>
+                </div>
+                <!-- Información del Torneo -->
+                <h3 th:text="${torneo.name}">Nombre del Torneo</h3>
+                <p class="detail-text"><strong>Juego:</strong> <span th:text="${torneo.juego}">League of Legends</span></p>
+                <p class="detail-text"><strong>Categoría:</strong> <span th:text="${torneo.category.name}">MOBA</span></p>
+                <p class="detail-text"><strong>Fecha:</strong> <span th:text="${torneo.fecha}">2025-03-20</span></p>
+                <!-- Botones de Editar y Eliminar -->
+                <div class="btn-group" th:if="${role != 'ROLE_USER'}">
+                    <a th:href="@{/torneo/edit/{id}(id=${torneo.id})}" class="btn btn-success btn-sm">
+                        <i class="fa fa-edit"></i> Editar
+                    </a>
+                    <form th:action="@{/torneo/delete/{id}(id=${torneo.id})}" method="post"
+                          onsubmit="return confirm('¿Confirmar eliminación de Torneo?')">
+                        <button type="submit" class="btn btn-danger btn-sm">
+                            <i class="fa fa-trash"></i> Eliminar
+                        </button>
+                    </form>
+                </div>
+            </div>
 
-    <!-- Tabla de torneos -->
-    <div class="table-responsive gaming-table">
-        <table class="table table-dark table-striped table-hover">
-            <thead>
-            <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Nombre del Torneo</th>
-                <th scope="col">Juego</th>
-                <th scope="col">Categoría</th>
-                <th scope="col">Fecha</th>
-                <th th:if="${role != 'ROLE_USER'}" scope="col">Opciones</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="torneo: ${torneos}">
-                <td th:text="${torneo.id}"></td>
-                <td th:text="${torneo.name}"></td>
-                <td th:text="${torneo.juego}"></td>
-                <td th:text="${torneo.category.name}"></td>
-                <td th:text="${torneo.fecha}"></td>
-                <td th:if="${role != 'ROLE_USER'}">
-                    <div class="d-inline-flex gap-2">
-                        <a th:href="@{/torneo/edit/{id}(id=${torneo.id})}" class="btn btn-success btn-sm gaming-btn">
-                            <i class="fa fa-edit"></i> Editar
-                        </a>
-                        <form th:action="@{/torneo/delete/{id}(id=${torneo.id})}" method="post"
-                              onsubmit="return confirm('Confirmar eliminación de Torneo?')">
-                            <button type="submit" class="btn btn-danger btn-sm gaming-btn">
-                                <i class="fa fa-trash"></i> Eliminar
-                            </button>
-                        </form>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+        </div>
     </div>
 </div>
-<!-- Área principal de contenido End -->
-
+<!-- Lista de Torneos End -->
 
 <!-- Footer Area Start -->
 <footer>
