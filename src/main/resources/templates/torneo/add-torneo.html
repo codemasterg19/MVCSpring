@@ -63,8 +63,11 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12 text-center">
-                <h2>Agregar Torneo</h2>
-                <p>Completa el formulario para crear un nuevo torneo.</p>
+                <h2 th:text="${torneo.id} == null ? 'Agregar Torneo' : 'Editar Torneo'"></h2>
+                <p th:text="${torneo.id} == null
+             ? 'Completa el formulario para crear un nuevo torneo.'
+             : 'Completa el formulario para editar el torneo.'">
+                </p>
             </div>
         </div>
     </div>
