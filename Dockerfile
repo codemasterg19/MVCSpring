@@ -1,5 +1,5 @@
 # Etapa de construcción
-FROM maven:3.8.5-openjdk-20 AS build
+FROM maven:3.9.5-eclipse-temurin-20 AS buil
 WORKDIR /app
 COPY . .
 RUN mvn clean package -DskipTests
