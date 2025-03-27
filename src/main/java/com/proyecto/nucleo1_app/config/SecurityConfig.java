@@ -31,7 +31,7 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
 
     http.authorizeHttpRequests(auth -> auth
             .requestMatchers("/login", "/register", "/css/**", "/js/**", "/images/**", "/vendor/**", "/assets/**", "/favicon.ico").permitAll()
-            .requestMatchers("/home").hasAnyAuthority("USER", "ADMIN")
+            .requestMatchers("/home").hasAnyRole("USER", "ADMIN")
             .anyRequest().authenticated());
 
     http.logout(logout -> logout
