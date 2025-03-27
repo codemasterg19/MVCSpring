@@ -23,21 +23,25 @@ public class SecurityConfig {
 
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
-        http.formLogin((FormLoginConfigurer<HttpSecurity> form) -> form.loginPage("/login")
-                .defaultSuccessUrl("/", true)
-                .permitAll());
-        http.authorizeHttpRequests((authorizer) -> authorizer
-                .requestMatchers("/login", "/register").permitAll()
-                .requestMatchers("/").hasAnyRole("USER", "ADMIN")
-                .anyRequest().authenticated());
-        http.logout(logout -> logout
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/login?logout")
-                .permitAll()
-        );
-        return http.build();
-    }
+public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    http.formLogin(form -> form
+            .loginPage("/login")
+            .defaultSuccessUrl("/home", true)
+            .permitAll());
+
+    http.authorizeHttpRequests(auth -> auth
+            .requestMatchers("/login", "/register", "/css/**", "/js/**", "/images/**", "/vendor/**", "/assets/**", "/favicon.ico").permitAll()
+            .requestMatchers("/home").hasAnyRole("USER", "ADMIN")
+            .anyRequest().authenticated());
+
+    http.logout(logout -> logout
+            .logoutUrl("/logout")
+            .logoutSuccessUrl("/login?logout=true")
+            .permitAll());
+
+    return http.build();
+}
+
 
     @Bean
     public PasswordEncoder passwordEncoder(){
